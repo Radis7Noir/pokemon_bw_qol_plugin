@@ -4,7 +4,7 @@
 ## Features
 - Adds a Repel re-use prompt @OnlySpaghettiCode
 - Makes the Plasma grunt who teleports the player to N's Castle available at all time, allowing the player to skip the Elite 4
-- Adds prompts to skip Skyarrow Bridge and N's Castle custscenes
+- Adds prompts to skip Skyarrow Bridge and N's Castle cutscenes
 - Adds `instant_text` as a YAML option:
   - If set to `true`, the in-game text will appear instantly.
 - Adds `faster_story` as a YAML option:
