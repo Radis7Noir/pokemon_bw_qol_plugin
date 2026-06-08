@@ -35,45 +35,43 @@ class Plugin:
         qol_options: dict[str, Any] = plugin_options.get("qol", {})
 
 # Instant Text
-        if qol_options.get("instant_text", False):
-            arm9 = bytearray(codeCompression.decompress(rom.arm9))
-            if rom.name[:9] == b'POKEMON\x20W':
-                arm9[0x18fda:0x18fe0] = b'\x00\x28\xc0\x46\xc0\x46'
-                arm9[0x19090:0x19098] = b'\x00\x48\x00\x47\x39\x05\x0a\x02'
-                extra_code = pkgutil.get_data(__name__, "files/w_insta_text_append.bin")
-                arm9[0x9c538:0x9c538+len(extra_code)] = extra_code
-            else:
-                arm9[0x18fc0:0x18fc4] = b'\xc0\x46\xc0\x46'
-                arm9[0x19074:0x1907c] = b'\x00\x48\x00\x47\x21\x05\x0a\x02'
-                extra_code = pkgutil.get_data(__name__, "files/b_insta_text_append.bin")
-                arm9[0x9c520:0x9c520+len(extra_code)] = extra_code
-            arm9 = bytearray(codeCompression.compress(arm9, True))
-            arm9[0xfc4:0xfc7] = (len(arm9) + 0x4000).to_bytes(3, "little")
-            rom.arm9 = bytes(arm9)
-            files_dump["arm9"] = rom.arm9
+        arm9 = bytearray(codeCompression.decompress(rom.arm9))
+        if rom.name[:9] == b'POKEMON\x20W':
+            arm9[0x18fda:0x18fe0] = b'\x00\x28\xc0\x46\xc0\x46'
+            arm9[0x19090:0x19098] = b'\x00\x48\x00\x47\x39\x05\x0a\x02'
+            extra_code = pkgutil.get_data(__name__, "files/w_insta_text_append.bin")
+            arm9[0x9c538:0x9c538+len(extra_code)] = extra_code
+        else:
+            arm9[0x18fc0:0x18fc4] = b'\xc0\x46\xc0\x46'
+            arm9[0x19074:0x1907c] = b'\x00\x48\x00\x47\x21\x05\x0a\x02'
+            extra_code = pkgutil.get_data(__name__, "files/b_insta_text_append.bin")
+            arm9[0x9c520:0x9c520+len(extra_code)] = extra_code
+        arm9 = bytearray(codeCompression.compress(arm9, True))
+        arm9[0xfc4:0xfc7] = (len(arm9) + 0x4000).to_bytes(3, "little")
+        rom.arm9 = bytes(arm9)
+        files_dump["arm9"] = rom.arm9
 
 # Faster Story
-        if qol_options.get("faster_story", False):
-            narc = NARC(rom.getFileByName("a/0/0/3"))
-            for i in [82, 349, 353, 361, 428, 429, 435, 436]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a003/a003_{i:03d}")
-                narc.files[i] = otpp.patch(narc.files[i], loaded_file)
-                files_dump[f"a003/{i}"] = narc.files[i]
-            rom.setFileByName("a/0/0/3", narc.save())
+        narc = NARC(rom.getFileByName("a/0/0/3"))
+        for i in [82, 349, 353, 361, 428, 429, 435, 436]:
+            loaded_file = pkgutil.get_data(__name__, f"files/a003/a003_{i:03d}")
+            narc.files[i] = otpp.patch(narc.files[i], loaded_file)
+            files_dump[f"a003/{i}"] = narc.files[i]
+        rom.setFileByName("a/0/0/3", narc.save())
 
-            narc = NARC(rom.getFileByName("a/0/5/7"))
-            for i in [12, 14, 18, 20, 32, 34, 36, 38, 58, 62, 124, 126, 128, 154, 194, 216, 228, 242, 308, 310, 634, 638, 642, 648, 658, 778, 780, 782, 792, 794]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a057/a057_{i:03d}")
-                narc.files[i] = otpp.patch(narc.files[i], loaded_file)
-                files_dump[f"a057/{i}"] = narc.files[i]
-            rom.setFileByName("a/0/5/7", narc.save())
+        narc = NARC(rom.getFileByName("a/0/5/7"))
+        for i in [12, 14, 18, 20, 32, 34, 36, 38, 58, 62, 124, 126, 128, 154, 194, 216, 228, 242, 308, 310, 634, 638, 642, 648, 658, 778, 780, 782, 792, 794]:
+            loaded_file = pkgutil.get_data(__name__, f"files/a057/a057_{i:03d}")
+            narc.files[i] = otpp.patch(narc.files[i], loaded_file)
+            files_dump[f"a057/{i}"] = narc.files[i]
+        rom.setFileByName("a/0/5/7", narc.save())
 
-            narc = NARC(rom.getFileByName("a/1/2/5"))
-            for i in [16, 28, 62, 154, 155, 321]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a125/a125_{i:03d}")
-                narc.files[i] = otpp.patch(narc.files[i], loaded_file)
-                files_dump[f"a125/{i}"] = narc.files[i]
-            rom.setFileByName("a/1/2/5", narc.save())
+        narc = NARC(rom.getFileByName("a/1/2/5"))
+        for i in [16, 28, 62, 154, 155, 321]:
+            loaded_file = pkgutil.get_data(__name__, f"files/a125/a125_{i:03d}")
+            narc.files[i] = otpp.patch(narc.files[i], loaded_file)
+            files_dump[f"a125/{i}"] = narc.files[i]
+        rom.setFileByName("a/1/2/5", narc.save())
 
 # Field Moves
         narc1 = NARC(rom.getFileByName("a/0/0/3"))
@@ -95,53 +93,43 @@ class Plugin:
         rom.setFileByName("a/0/5/7", narc2.save())
 
 # Guaranteed Fishing
-        if qol_options.get("guaranteed_fishing", False):
-            narc = NARC(rom.getFileByName("a/1/2/6"))
-            for i in [0, 1, 2, 6, 49, 53, 58, 69, 71, 72, 73, 75, 77, 79, 80, 81, 82, 84, 93, 94, 98, 101, 103, 104, 105, 108, 109, 110, 111]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a126/a126_{i:03d}")
-                narc.files[i] = otpp.patch(narc.files[i], loaded_file)
-                files_dump[f"a126/{i}"] = narc.files[i]
-            rom.setFileByName("a/1/2/6", narc.save())
+        narc = NARC(rom.getFileByName("a/1/2/6"))
+        for i in [0, 1, 2, 6, 49, 53, 58, 69, 71, 72, 73, 75, 77, 79, 80, 81, 82, 84, 93, 94, 98, 101, 103, 104, 105, 108, 109, 110, 111]:
+            loaded_file = pkgutil.get_data(__name__, f"files/a126/a126_{i:03d}")
+            narc.files[i] = otpp.patch(narc.files[i], loaded_file)
+            files_dump[f"a126/{i}"] = narc.files[i]
+        rom.setFileByName("a/1/2/6", narc.save())
 
 # Bike Everywhere / Remove Surf & Bike Music
-        bike_everywhere = qol_options.get("bike_everywhere", False)
-        remove_surf_bike_music = qol_options.get("remove_surf_bike_music", False)
-        if bike_everywhere or remove_surf_bike_music:
-            narc = NARC(rom.getFileByName("a/0/1/2"))
-            if bike_everywhere:
-                loaded_file = pkgutil.get_data(__name__, "files/a012/a012_000_bike")
-                narc.files[0] = otpp.patch(narc.files[0], loaded_file)
-
-            if remove_surf_bike_music:
-                loaded_file = pkgutil.get_data(__name__, "files/a012/a012_000_music")
-                narc.files[0] = otpp.patch(narc.files[0], loaded_file)
-            files_dump["a012/0"] = narc.files[0]
-            rom.setFileByName("a/0/1/2", narc.save())
+        narc = NARC(rom.getFileByName("a/0/1/2"))
+        loaded_bike = pkgutil.get_data(__name__, "files/a012/a012_000_bike")
+        loaded_music = pkgutil.get_data(__name__, "files/a012/a012_000_music")
+        narc.files[0] = otpp.patch(otpp.patch(narc.files[0], loaded_bike), loaded_music)
+        files_dump["a012/0"] = narc.files[0]
+        rom.setFileByName("a/0/1/2", narc.save())
 
 # Gym Warps
-        if qol_options.get("gym_warps", False):
-            narc = NARC(rom.getFileByName("a/0/0/8"))
-            for i in [515, 518, 519, 520, 524, 525, 527, 538, 548, 552, 564, 565, 595, 606, 615]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a008/a008_{i:03d}")
-                narc.files[i] = otpp.patch(narc.files[i], loaded_file)
-                files_dump[f"a008/{i}"] = narc.files[i]
-            rom.setFileByName("a/0/0/8", narc.save())
+        narc = NARC(rom.getFileByName("a/0/0/8"))
+        for i in [515, 518, 519, 520, 524, 525, 527, 538, 548, 552, 564, 565, 595, 606, 615]:
+            loaded_file = pkgutil.get_data(__name__, f"files/a008/a008_{i:03d}")
+            narc.files[i] = otpp.patch(narc.files[i], loaded_file)
+            files_dump[f"a008/{i}"] = narc.files[i]
+        rom.setFileByName("a/0/0/8", narc.save())
 
-            narc = NARC(rom.getFileByName("a/1/2/5"))
-            for i in [7, 18, 19, 29, 63, 97, 98, 108, 114, 121]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a125/a125_{i:03d}")
-                narc.files[i] = otpp.patch(narc.files[i], loaded_file)
-                files_dump[f"a125/{i}"] = narc.files[i]
-            rom.setFileByName("a/1/2/5", narc.save())
+        narc = NARC(rom.getFileByName("a/1/2/5"))
+        for i in [7, 18, 19, 29, 63, 97, 98, 108, 114, 121]:
+            loaded_file = pkgutil.get_data(__name__, f"files/a125/a125_{i:03d}")
+            narc.files[i] = otpp.patch(narc.files[i], loaded_file)
+            files_dump[f"a125/{i}"] = narc.files[i]
+        rom.setFileByName("a/1/2/5", narc.save())
 
 # No Pickup Animation & Fanfare Skip
-        if qol_options.get("remove_pickup_animation", False):
-            narc = NARC(rom.getFileByName("a/0/5/7"))
-            for i in [862, 864]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a057/a057_{i:03d}")  # not hardcoded _862
-                narc.files[i] = otpp.patch(narc.files[i], loaded_file)
-                files_dump[f"a057/{i}"] = narc.files[i]
-            rom.setFileByName("a/0/5/7", narc.save())
+        narc = NARC(rom.getFileByName("a/0/5/7"))
+        for i in [862, 864]:
+            loaded_file = pkgutil.get_data(__name__, f"files/a057/a057_{i:03d}")  # not hardcoded _862
+            narc.files[i] = otpp.patch(narc.files[i], loaded_file)
+            files_dump[f"a057/{i}"] = narc.files[i]
+        rom.setFileByName("a/0/5/7", narc.save())
 
 # Always On (Repel Prompt, Shortcuts, Delete 4)
         narc = NARC(rom.getFileByName("a/0/0/3"))
