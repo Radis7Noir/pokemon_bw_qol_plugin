@@ -44,4 +44,7 @@ plugin_options:
       remove_surf_bike_music: true
 ```
 - Change the above options as seen fit and generate the seed as usual
-  - When running the .apwhite/.apblack patch, the produced .nds file should include the features that have been activated
+  - When running the .apwhite/.apblack patch, the produced .nds file should include the features that have been activated.
+- To update mid-run, install the plugin apworld, delete the patched ROM and run the patch file again
+  - Updating mid-run will only apply the options that were activated in the YAML used for generation;
+  - A ready to use apworld that includes all features activated by default will be included in the releases. Use it to update mid-run when a feature you want was not set in your YAML.
