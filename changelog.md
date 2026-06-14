@@ -2,6 +2,14 @@
 
 Changelog
 
+## v13
+* Initial GitHub release 
+* Rewrote and cleaned the entire init file to optimize loading times and make more YAML options
+  * `instant_text`,  `faster_story`, `remove_pickup_animation`, `gym_warps` and `hm_use` now need to be set in the BW YAML
+  * Delete 4, the Repel re-use prompt and the shortcut/skip prompts will always be applied by the plugin regardless of the options
+* Added a new YAML option: `guaranteed_fishing`
+  * The Super Rod will always land on a Pokémon, but reeling in time is still necessary to get the encounter
+
 ## v12
 * Added a Repel re-use prompt (all credit goes to @ OnlySpaghettiCode)
 * Added two new YAML options: `bike_everywhere` and `remove_surf_bike_music`
