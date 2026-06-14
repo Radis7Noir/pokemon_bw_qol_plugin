@@ -75,6 +75,39 @@ class Plugin:
                 files_dump[f"a125/{i}"] = narc.files[i]
             rom.setFileByName("a/1/2/5", narc.save())
 
+# Guaranteed Catch
+        if qol_options.get("guaranteed_catch", False):
+            ov_num = 93
+            overlay_table = rom.loadArm9Overlays()
+            ov_obj = overlay_table[ov_num]
+            ov_bytes = bytearray(ov_obj.data)
+            ov_bytes[0x15B82:0x15B84] = b'\x00\x00'
+            ov_obj.data = bytes(ov_bytes)
+            rom.files[ov_obj.fileID] = ov_obj.save(compress=True)
+            files_dump[f"ov{ov_num}"] = rom.files[ov_obj.fileID]
+            rom.arm9OverlayTable = saveOverlayTable(overlay_table)
+
+# Blind Trainers
+        if qol_options.get("blind_trainers", False):
+            narc = NARC(rom.getFileByName("a/1/2/5"))
+            for i in [7, 18, 29, 45, 46, 63, 97, 108, 114, 121, 152, 153, 154, 155, 158, 160, 161, 162, 163, 164, 191, 192, 195, 196, 197, 198, 199, 200, 201, 202, 206, 210, 216, 217, 218, 221, 223, 226, 227, 235, 236, 238, 240, 255, 317, 319, 321, 325, 326, 329, 331, 333, 337, 339, 340, 341, 345, 346, 348, 352, 353, 354, 355, 365, 368, 370, 374, 376, 378, 383, 387, 423]:
+                loaded_file = pkgutil.get_data(__name__, f"files/a125/blind_trainers/{i:03d}")
+                narc.files[i] = otpp.patch(narc.files[i], loaded_file)
+                files_dump[f"a125/{i}"] = narc.files[i]
+            rom.setFileByName("a/1/2/5", narc.save())
+
+# Remove Phenomenom Items
+        if qol_options.get("remove_dust_cloud_items", False):
+            ov_num = 21
+            overlay_table = rom.loadArm9Overlays()
+            ov_obj = overlay_table[ov_num]
+            ov_bytes = bytearray(ov_obj.data)
+            ov_bytes[0x22adc] = 0xb5
+            ov_obj.data = bytes(ov_bytes)
+            rom.files[ov_obj.fileID] = ov_obj.save(compress=True)
+            files_dump[f"ov{ov_num}"] = rom.files[ov_obj.fileID]
+            rom.arm9OverlayTable = saveOverlayTable(overlay_table)
+
 # Field Moves
         narc1 = NARC(rom.getFileByName("a/0/0/3"))
         narc2 = NARC(rom.getFileByName("a/0/5/7"))
