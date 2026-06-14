@@ -10,8 +10,14 @@
 - Adds `faster_story` as a YAML option:
   - If set to `true`, some story events will be changed to become more time efficient or to add more routing options;
   - Check the [changelog.md](https://github.com/Radis7Noir/pokemon_bw_qol_plugin/blob/main/changelog.md) file to see the changes.
+ - Adds `blind_trainers` as a YAML option:
+  - If set to `true`, trainers won't notice you unless spoken to.
+ - Adds `guaranteed_catch` as a YAML option:
+  - If set to `true`, any Poké Ball will be guaranteed to catch a wild Pokémon.
 - Adds `remove_pickup_animation` as a YAML option:
   - If set to `true`, the item pickup animation will be removed, and most of the fanfare sounds will become skippable.
+- Adds `remove_dust_cloud_items` as a YAML option:
+  - If set to `true`, dust clouds will only give encounters. Flying shadows can still give items.
 - Adds `gym_warps` as a YAML option:
   - If set to `true`, warps will be added to every gym to make it possible to skip their puzzles.
 - Adds `hm_use` as a YAML option:
@@ -36,10 +42,13 @@ plugin_options:
     qol:
       instant_text: true
       faster_story: true
+      blind_trainers: true
       remove_pickup_animation: true # also makes most fanfares skippable
       gym_warps: true
       hm_use: fastest # currently only supports fastest
-      guaranteed_fishing: true # 
+      guaranteed_catch: true
+      guaranteed_fishing: true  # reeling in time is still necessary
+      remove_dust_cloud_items: true
       bike_everywhere: true
       remove_surf_bike_music: true
 ```

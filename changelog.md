@@ -2,6 +2,12 @@
 
 Changelog
 
+## v14
+* Added 3 new YAML options: `blind_trainers`, `guaranteed_catch` and `remove_dust_cloud_items`
+  * `blind_trainers` sets trainers' sight to 0 so they don't notice the player
+  * `guaranteed_catch` makes all Poké Ball guaranteed to succeed on wild Pokémon
+  * `remove_dust_cloud_items` makes dust clouds give encounters every time
+
 ## v13
 * Initial GitHub release 
 * Rewrote and cleaned the entire init file to optimize loading times and make more YAML options
