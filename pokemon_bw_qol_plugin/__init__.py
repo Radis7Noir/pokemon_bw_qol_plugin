@@ -40,13 +40,6 @@ class Plugin(PluginProtocol):
     def patch(self):
         if DEV: return  # This line is only relevant to the main apworld dev and can be removed if you want.
 
-        # Proposal:
-        # You change all (or at least most) options if you want to settings, i.e. the user needs to define those in
-        # their host.yaml instead of the player yaml. To do that, just change the "self.get_option(..." to
-        # "self.get_setting(..." for all options you want to convert.
-        # However, I haven't tested yet whether the settings in the host.yaml actually work.
-
-
         option_or_setting = self.get_option if self.domain in self.all_plugin_options else self.get_setting
 
 # Instant Text
