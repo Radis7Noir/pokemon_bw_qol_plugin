@@ -2,6 +2,13 @@
 
 Changelog
 
+## v15
+* Updated the code to work with v0.3.31 of the main APworld @Slimey
+* Fixed a conflict between `blind_trainers` and `faster_story`
+* Added two new YAML options: `intro_skip` and `intro_skip_gender` @Slimey
+  * `intro_skip` skips the Prof Juniper introduction at the beginning of the game. The trainer name will match the name setr in the YAML (or the 7 first characters if longer)
+  * `intro_skip_gender` sets the gender that will be chosen if intro_skip is on
+
 ## v14
 * Added 3 new YAML options: `blind_trainers`, `guaranteed_catch` and `remove_dust_cloud_items`
   * `blind_trainers` sets trainers' sight to 0 so they don't notice the player

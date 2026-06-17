@@ -7,6 +7,10 @@
 - Adds prompts to skip Skyarrow Bridge and N's Castle cutscenes
 - Adds `instant_text` as a YAML option:
   - If set to `true`, the in-game text will appear instantly.
+- Adds `intro_skip` as a YAML option:
+  - If `intro_skip` is set to `true`, the gender of the trainer will be set by this option.
+- Adds `intro_skip_gender` as a YAML option:
+  - If set to `true`, the Prof Juniper introduction at the beggining of the game will be skipped.
 - Adds `faster_story` as a YAML option:
   - If set to `true`, some story events will be changed to become more time efficient or to add more routing options;
   - Check the [changelog.md](https://github.com/Radis7Noir/pokemon_bw_qol_plugin/blob/main/changelog.md) file to see the changes.
@@ -40,13 +44,17 @@
 ```
 plugin_options:
     qol:
+      skip_intro: true
+      skip_intro_gender:
+        male: 50
+        female: 50
       instant_text: true
-      faster_story: true
-      blind_trainers: true
-      remove_pickup_animation: true # also makes most fanfares skippable
-      gym_warps: true
-      hm_use: fastest # currently only supports fastest
       guaranteed_catch: true
+      faster_story: true
+      blind_trainers: false
+      remove_pickup_animation: true  # also makes most fanfares skippable
+      gym_warps: true
+      hm_use: fastest  # currently only supports fastest
       guaranteed_fishing: true  # reeling in time is still necessary
       remove_dust_cloud_items: true
       bike_everywhere: true
@@ -54,6 +62,3 @@ plugin_options:
 ```
 - Change the above options as seen fit and generate the seed as usual
   - When running the .apwhite/.apblack patch, the produced .nds file should include the features that have been activated.
-- To update mid-run, install the plugin apworld, delete the patched ROM and run the patch file again
-  - Updating mid-run will only apply the options that were activated in the YAML used for generation;
-  - A ready to use apworld that includes all features activated by default will be included in the releases. Use it to update mid-run when a feature you want was not set in your YAML.
