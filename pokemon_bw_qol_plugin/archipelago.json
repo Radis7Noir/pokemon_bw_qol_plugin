@@ -1,6 +1,1 @@
-{
-    "version": 7,
-    "compatible_version": 7,
-    "game": "Pokemon BW QoL Plugin",
-    "minimum_ap_version": "0.6.4"
-}
+{"game":"Pokemon BW QoL Plugin","minimum_ap_version":"0.6.4","authors":["RadisNoir"],"world_version":"1.15.0","version":7,"compatible_version":7}
