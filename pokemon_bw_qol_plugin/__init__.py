@@ -33,7 +33,7 @@ class Plugin(PluginProtocol):
     # The version needs to always have the semantic format, i.e. "<major>.<minor>.<patch>".
     name = "Pokemon BW QoL Plugin"
     domain = "qol"
-    version = "1.15.0"
+    version = "1.16.0"
     author = "RadisNoir"
 
     # This is called during the patching process, after the main apworld did all its standard modifications to the rom.
@@ -55,6 +55,26 @@ class Plugin(PluginProtocol):
                 arm9[0x19074:0x1907c] = b'\x00\x48\x00\x47\x21\x05\x0a\x02'
                 extra_code = pkgutil.get_data(__name__, "files/b_insta_text_append.bin")
                 arm9[0x9c520:0x9c520+len(extra_code)] = extra_code
+
+#Battle Scene
+        match option_or_setting("battle_scene", False):
+            case "turned_on":
+                pass
+            case "turned_off":
+                arm9 = self.get_arm9()
+                arm9[0x0434e] = 0x0a
+            case _:
+                pass
+
+#Battle Style
+        match option_or_setting("battle_style", False):
+            case "shift":
+                pass
+            case "set":
+                arm9 = self.get_arm9()
+                arm9[0x04346] = 0x0a
+            case _:
+                pass
 
 #Intro Skip
         if option_or_setting("skip_intro", False):
@@ -86,7 +106,7 @@ class Plugin(PluginProtocol):
 
 # Faster Story
         if option_or_setting("faster_story", False):
-            for i in [82, 349, 353, 361, 428, 429, 435, 436]:
+            for i in [21, 67, 349, 353, 361, 428, 429, 435]:
                 loaded_file = pkgutil.get_data(__name__, f"files/a003/a003_{i:03d}")
                 narc_file = self.get_from_narc("a/0/0/3", i)
                 self.otpp_patch_array(narc_file, loaded_file)
@@ -101,6 +121,34 @@ class Plugin(PluginProtocol):
                 loaded_file = pkgutil.get_data(__name__, f"files/a125/a125_{i:03d}")
                 narc_file = self.get_from_narc("a/1/2/5", i)
                 self.otpp_patch_array(narc_file, loaded_file)
+
+# Pokemon Entrance Animations
+        match option_or_setting("pokemon_entrance_animations", False):
+            case "disable_always":
+                ov_93 = self.get_overlay(93)
+                ov_93[0x3733b] = 0xe0
+                for i in (0x368c8, # my poke solo 2
+                          0x3671e, # my poke single 2
+                          0x361ac, # opp poke single 2
+                          0x35b98, 0x35c16, # wild double 5, 6
+                          0x35964, # trainer single 5, 8
+                          0x35686, 0x356ca):# wild single 4, 5
+                    ov_93[i:i+4] = b'\0\0\0\0'
+            case "disable_on_switch_and_wilds":
+                ov_93 = self.get_overlay(93)
+                ov_93[0x3733b] = 0xe0
+                for i in (0x3671e, # my poke single 2
+                          0x361ac, # opp poke single 2
+                          0x35b98, 0x35c16, # wild double 5, 6
+                          0x35686, 0x356ca):# wild single 4, 5
+                    ov_93[i:i+4] = b'\0\0\0\0'
+            case "disable_on_switch":
+                ov_93 = self.get_overlay(93)
+                ov_93[0x3733b] = 0xe0
+            case "vanilla":
+                pass
+            case _:
+                pass
 
 # Blind Trainers
         if option_or_setting("blind_trainers", False):
@@ -125,6 +173,31 @@ class Plugin(PluginProtocol):
         if option_or_setting("remove_dust_cloud_items", False):
             ov_21 = self.get_overlay(21)
             ov_21[0x22adc] = 0xb5
+
+# TMs/HMs Fully Compatible
+        if option_or_setting("tmhm_fully_compatible", False):
+            for i in range(1, 668):
+                if i == 151:
+                    continue
+                loaded_file = pkgutil.get_data(__name__, f"files/a016/{i:03d}")
+                narc_file = self.get_from_narc("a/0/1/6", i)
+                self.otpp_patch_array(narc_file, loaded_file)
+
+# Forgettable HMs
+        if option_or_setting("forgettable_hms", False):
+            arm9 = self.get_arm9()
+            if self._rom.name[:9] == b'POKEMON\x20W':
+                arm9[0x00fc4:0x00fc6] = b'\xe8\x3d'
+                arm9[0x1d300:0x1d304] = b'\x00\x20\x70\x47'
+            else:
+                arm9[0x00fc4:0x00fc6] = b'\xf4\x3d'
+                arm9[0x1d2e4:0x1d2e8] = b'\x00\x20\x70\x47'
+
+# Fast Egg Hatch
+        if option_or_setting("fast_hatch", False):
+            for i in range(1, 668):
+                narc_file = self.get_from_narc("a/0/1/6", i)
+                narc_file[0x13] = 0x01
 
 # Field Moves
         match option_or_setting("hm_use", False):
@@ -180,8 +253,8 @@ class Plugin(PluginProtocol):
                 narc_file = self.get_from_narc("a/0/5/7", i)
                 self.otpp_patch_array(narc_file, loaded_file)
 
-# Always On (Repel Prompt, Shortcuts, Delete 4)
-        for i in [82, 141, 263, 267, 268, 300]:
+# Always On (Repel Prompt, Shortcuts, Delete 4, Fast Text)
+        for i in [141, 263, 267, 268, 300]:
             loaded_file = pkgutil.get_data(__name__, f"files/a003/a003_{i:03d}")
             narc_file = self.get_from_narc("a/0/0/3", i)
             self.otpp_patch_array(narc_file, loaded_file)
@@ -196,6 +269,8 @@ class Plugin(PluginProtocol):
             narc_file = self.get_from_narc("a/1/2/5", i)
             self.otpp_patch_array(narc_file, loaded_file)
 
+        arm9 = self.get_arm9()
+        arm9[0x04332] = 0x02
 
 # Just run this python script and it will pack this plugin into an apworld file for you.
 # Note that any file or folder that contains "_temp" in its name will be ignored and the archipelago.json that's
