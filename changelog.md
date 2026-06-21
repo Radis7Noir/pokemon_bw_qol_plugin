@@ -2,6 +2,23 @@
 
 Changelog
 
+## v16
+* Updated the patches to be compatible with v0.3.34 of the main apworld
+* Fixed the glitched text in the Musical Theater of Nimbasa City
+* Added an NPC in Nacrene City and another in Nimbasa City to prevent sequence breaks when reaching these cities from a different side to those in vanilla
+* The in-game Text Speed option will now always be set to Fast by default
+* Added 6 new YAML options: `battle_scene`, `battle_style`, `pokemon_entrance_animations`, `tmhm_fully_compatible`, `forgettable_hms` and `fast_hatch`
+  * `battle_scene` turns off the battle animations or leaves them on
+  * `battle_style` turns off the switch prompt after defeating a trainer's pokemon or leaves it on
+  * `pokemon_entrance_animations` can disable the ball throwing animations when sending a pokémon @Slimey
+    * `vanilla` does not change anything
+	* `only_on_switch` will only remove the animations when the player or the opponent sends another pokemon
+	* `disable_on_switch_and_wilds` will additionally remove the player's lead entrance animation against wilds
+	* `disable_always` will additionally remove the player's lead entrance animation against trainers (except in triple, rotation and tag battles)
+  * `tmhm_fully_compatible` makes tms and hms learnable by all pokemon
+  * `forgettable_hms` allows any move to be taught over an hm move
+  * `fast_hatch` makes all eggs hatch in one cycle
+
 ## v15
 * Updated the code to work with v0.3.31 of the main APworld @Slimey
 * Fixed a conflict between `blind_trainers` and `faster_story`
