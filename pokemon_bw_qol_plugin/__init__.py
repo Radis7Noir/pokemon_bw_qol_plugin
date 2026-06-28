@@ -106,19 +106,19 @@ class Plugin(PluginProtocol):
 
 # Faster Story
         if option_or_setting("faster_story", False):
-            for i in [21, 67, 349, 353, 361, 428, 429, 435]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a003/a003_{i:03d}")
+            for i in [349, 361, 428, 429, 435]:
+                loaded_file = pkgutil.get_data(__name__, f"files/a003/faster_story/{i:03d}")
                 narc_file = self.get_from_narc("a/0/0/3", i)
                 self.otpp_patch_array(narc_file, loaded_file)
 
-            for i in [12, 14, 18, 20, 32, 34, 36, 38, 58, 62, 124, 126, 128, 154, 194, 216, 228, 242, 308, 310,
-                      634, 638, 642, 648, 658, 778, 780, 782, 792, 794]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a057/a057_{i:03d}")
+            for i in [14, 18, 20, 34, 36, 38, 58, 62, 126, 128, 154, 194, 216, 228, 242,
+                      634, 638, 658, 778, 780, 782, 792, 794]:
+                loaded_file = pkgutil.get_data(__name__, f"files/a057/faster_story/{i:03d}")
                 narc_file = self.get_from_narc("a/0/5/7", i)
                 self.otpp_patch_array(narc_file, loaded_file)
 
-            for i in [16, 28, 62, 154, 155, 321]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a125/a125_{i:03d}")
+            for i in [28]:
+                loaded_file = pkgutil.get_data(__name__, f"files/a125/faster_story/{i:03d}")
                 narc_file = self.get_from_narc("a/1/2/5", i)
                 self.otpp_patch_array(narc_file, loaded_file)
 
@@ -152,17 +152,8 @@ class Plugin(PluginProtocol):
 
 # Blind Trainers
         if option_or_setting("blind_trainers", False):
-            faster_story = option_or_setting("faster_story", False)
-            for i in [7, 18, 29, 45, 46, 63, 97, 108, 114, 121, 152, 153, 154, 155, 158, 160, 161, 162, 163, 164,
-                      191, 192, 195, 196, 197, 198, 199, 200, 201, 202, 206, 210, 216, 217, 218, 221, 223, 226, 227,
-                      235, 236, 238, 240, 255, 317, 319, 321, 325, 326, 329, 331, 333, 337, 339, 340, 341, 345, 346,
-                      348, 352, 353, 354, 355, 365, 368, 370, 374, 376, 378, 383, 387, 423]:
-                if faster_story and i in [154, 155]:
-                    loaded_file = pkgutil.get_data(__name__, f"files/a125/blind_trainers/faster_story/{i:03d}")
-                else:
-                    loaded_file = pkgutil.get_data(__name__, f"files/a125/blind_trainers/{i:03d}")
-                narc_file = self.get_from_narc("a/1/2/5", i)
-                self.otpp_patch_array(narc_file, loaded_file)
+            ov_21 = self.get_overlay(21)
+            ov_21[0x2635e:0x26360] = b'\x09\xe0'
 
 # Guaranteed Catch
         if option_or_setting("guaranteed_catch", False):
@@ -179,19 +170,9 @@ class Plugin(PluginProtocol):
             for i in range(1, 668):
                 if i == 151:
                     continue
-                loaded_file = pkgutil.get_data(__name__, f"files/a016/{i:03d}")
+                loaded_file = pkgutil.get_data(__name__, f"files/a016/tmhm_fully_compatible/{i:03d}")
                 narc_file = self.get_from_narc("a/0/1/6", i)
                 self.otpp_patch_array(narc_file, loaded_file)
-
-# Forgettable HMs
-        if option_or_setting("forgettable_hms", False):
-            arm9 = self.get_arm9()
-            if self._rom.name[:9] == b'POKEMON\x20W':
-                arm9[0x00fc4:0x00fc6] = b'\xe8\x3d'
-                arm9[0x1d300:0x1d304] = b'\x00\x20\x70\x47'
-            else:
-                arm9[0x00fc4:0x00fc6] = b'\xf4\x3d'
-                arm9[0x1d2e4:0x1d2e8] = b'\x00\x20\x70\x47'
 
 # Fast Egg Hatch
         if option_or_setting("fast_hatch", False):
@@ -200,25 +181,38 @@ class Plugin(PluginProtocol):
                 narc_file[0x13] = 0x01
 
 # Field Moves
-        match option_or_setting("hm_use", False):
-            case "fast":
-                suffix = "fast"
-            case "fastest":
-                suffix = "fastest"
-            case _:
-                suffix = "rock_smash"
-        loaded_file = pkgutil.get_data(__name__, f"files/a003/a003_280_{suffix}")
-        narc_file = self.get_from_narc("a/0/0/3", 280)
-        self.otpp_patch_array(narc_file, loaded_file)
-        loaded_file = pkgutil.get_data(__name__, f"files/a057/a057_867_{suffix}")
-        narc_file = self.get_from_narc("a/0/5/7", 867)
-        self.otpp_patch_array(narc_file, loaded_file)
+        if "hm_with_badges" in self.all_plugin_options:
+            match option_or_setting("hm_use", False):
+                case "fast":
+                    suffix = "badgefast"
+                case "fastest":
+                    suffix = "badgefast"
+                case "vanilla":
+                    suffix = "badgevanilla"
+                case _:
+                    suffix = "badgevanilla"
+            loaded_file = pkgutil.get_data(__name__, f"files/a057/hm_use/867_{suffix}")
+            narc_file = self.get_from_narc("a/0/5/7", 867)
+            self.otpp_patch_array(narc_file, loaded_file)
+        else:
+            match option_or_setting("hm_use", False):
+                case "fast":
+                    suffix = "fast"
+                case "fastest":
+                    suffix = "fast"
+                case "vanilla":
+                    suffix = "vanilla"
+                case _:
+                    suffix = "vanilla"
+            loaded_file = pkgutil.get_data(__name__, f"files/a057/hm_use/867_{suffix}")
+            narc_file = self.get_from_narc("a/0/5/7", 867)
+            self.otpp_patch_array(narc_file, loaded_file)
 
 # Guaranteed Fishing
         if option_or_setting("guaranteed_fishing", False):
             for i in [0, 1, 2, 6, 49, 53, 58, 69, 71, 72, 73, 75, 77, 79, 80, 81, 82, 84, 93, 94, 98,
                       101, 103, 104, 105, 108, 109, 110, 111]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a126/a126_{i:03d}")
+                loaded_file = pkgutil.get_data(__name__, f"files/a126/guaranteed_fishing/{i:03d}")
                 narc_file = self.get_from_narc("a/1/2/6", i)
                 self.otpp_patch_array(narc_file, loaded_file)
 
@@ -237,40 +231,47 @@ class Plugin(PluginProtocol):
 # Gym Warps
         if option_or_setting("gym_warps", False):
             for i in [515, 518, 519, 520, 524, 525, 527, 538, 548, 552, 564, 565, 595, 606, 615]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a008/a008_{i:03d}")
+                loaded_file = pkgutil.get_data(__name__, f"files/a008/gym_warps/{i:03d}")
                 narc_file = self.get_from_narc("a/0/0/8", i)
                 self.otpp_patch_array(narc_file, loaded_file)
 
             for i in [7, 18, 19, 29, 63, 97, 98, 108, 114, 121]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a125/a125_{i:03d}")
+                loaded_file = pkgutil.get_data(__name__, f"files/a125/gym_warps/{i:03d}")
                 narc_file = self.get_from_narc("a/1/2/5", i)
                 self.otpp_patch_array(narc_file, loaded_file)
 
 # No Pickup Animation & Fanfare Skip
         if option_or_setting("remove_pickup_animation", False):
             for i in [862, 864]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a057/a057_{i:03d}")
+                loaded_file = pkgutil.get_data(__name__, f"files/a057/remove_pickup_animation/{i:03d}")
                 narc_file = self.get_from_narc("a/0/5/7", i)
                 self.otpp_patch_array(narc_file, loaded_file)
 
-# Always On (Repel Prompt, Shortcuts, Delete 4, Fast Text)
-        for i in [141, 263, 267, 268, 300]:
-            loaded_file = pkgutil.get_data(__name__, f"files/a003/a003_{i:03d}")
+# Always On (Repel Prompt, Shortcuts, Delete 4, Fast Text, Field Move Text)
+        for i in [21, 67, 141, 263, 267, 268, 280, 300, 353, 356, 385]:
+            loaded_file = pkgutil.get_data(__name__, f"files/a003/{i:03d}")
             narc_file = self.get_from_narc("a/0/0/3", i)
             self.otpp_patch_array(narc_file, loaded_file)
 
-        for i in [272, 292, 502, 504, 528, 554, 556, 872]:
-            loaded_file = pkgutil.get_data(__name__, f"files/a057/a057_{i:03d}")
+        for i in [12, 32, 124, 272, 292, 308, 310, 502, 504, 528, 554, 556, 642, 648, 652, 866, 706, 872]:
+            loaded_file = pkgutil.get_data(__name__, f"files/a057/{i:03d}")
             narc_file = self.get_from_narc("a/0/5/7", i)
             self.otpp_patch_array(narc_file, loaded_file)
 
-        for i in [251, 252, 264, 277]:
-            loaded_file = pkgutil.get_data(__name__, f"files/a125/a125_{i:03d}")
+        for i in [16, 28, 62, 154, 155, 251, 252, 264, 277, 351]:
+            loaded_file = pkgutil.get_data(__name__, f"files/a125/{i:03d}")
             narc_file = self.get_from_narc("a/1/2/5", i)
             self.otpp_patch_array(narc_file, loaded_file)
 
+        #Text Speed Fast + Forgettable HMs
         arm9 = self.get_arm9()
         arm9[0x04332] = 0x02
+        if self._rom.name[:9] == b'POKEMON\x20W':
+            arm9[0x00fc4:0x00fc6] = b'\xe8\x3d'
+            arm9[0x1d300:0x1d304] = b'\x00\x20\x70\x47'
+        else:
+            arm9[0x00fc4:0x00fc6] = b'\xf4\x3d'
+            arm9[0x1d2e4:0x1d2e8] = b'\x00\x20\x70\x47'
 
 # Just run this python script and it will pack this plugin into an apworld file for you.
 # Note that any file or folder that contains "_temp" in its name will be ignored and the archipelago.json that's
