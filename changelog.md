@@ -2,6 +2,18 @@
 
 Changelog
 
+## v17
+* `forgettable_hms` in now always on and can be removed from options in the BW YAML
+* `blind_trainers` does not use otpp patches anymore
+* Parts of `faster_story` are now applied regardless of the setting to ensure compatibility with the Extra Logic plugin
+* The roadblock NPCs for the Parcel, the Dragon Skull and the Machine Part will now push the player back in the direction they came from
+  * This only matters if options from the Extra Logic plugin are on
+* The Team Plasma sequence in Wellspring Cave has been adjusted to avoid issues when accessing the cave before the cutscenes on Route 3
+  * This only matters if options from the Extra Logic plugin are on
+* Added an NPC in Nacrene City and another one in Nimbasa City to prevent entering Nacrene Museum and the Musical Theater before they become available in vanilla
+  * This only matters if options from the Extra Logic plugin are on
+* Added more patch files to be used with the Extra Logic plugin
+
 ## v16
 * Updated the patches to be compatible with v0.3.34 of the main apworld
 * Fixed the glitched text in the Musical Theater of Nimbasa City

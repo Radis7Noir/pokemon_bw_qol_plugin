@@ -20,20 +20,9 @@ except ImportError:
 # This has to exactly be named "Plugin" and should inherit from "PluginProtocol"
 class Plugin(PluginProtocol):
 
-    # The following fields need to always be set by the plugin creator.
-    # "domain" is the key that is used for plugin options and settings, i.e. the player needs to put
-    # >  plugin_options:
-    # >    <domain>:
-    # >      option_1: 123
-    # into their player yaml and
-    # >  plugin_settings:
-    # >    <domain>:
-    # >      setting_1: 123
-    # into their host.yaml.
-    # The version needs to always have the semantic format, i.e. "<major>.<minor>.<patch>".
     name = "Pokemon BW QoL Plugin"
     domain = "qol"
-    version = "1.16.0"
+    version = "1.17.0"
     author = "RadisNoir"
 
     # This is called during the patching process, after the main apworld did all its standard modifications to the rom.
