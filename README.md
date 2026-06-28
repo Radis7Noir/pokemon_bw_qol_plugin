@@ -1,5 +1,5 @@
 # Pokémon BW QoL APworld Plugin
-*An optional APworld that adds some QoL features to the main BW APworld*
+An optional APworld that adds some QoL features to the main BW APworld
 
 The latest version of the main APworld (0.3.34) is only compatible with v16 or later of the plugin.
 
