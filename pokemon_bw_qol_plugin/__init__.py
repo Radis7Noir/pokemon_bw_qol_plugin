@@ -247,7 +247,7 @@ class Plugin(PluginProtocol):
             narc_file = self.get_from_narc("a/0/5/7", i)
             self.otpp_patch_array(narc_file, loaded_file)
 
-        for i in [16, 28, 62, 154, 155, 251, 252, 264, 277, 321]:
+        for i in [16, 62, 154, 155, 251, 252, 264, 277, 321]:
             loaded_file = pkgutil.get_data(__name__, f"files/a125/{i:03d}")
             narc_file = self.get_from_narc("a/1/2/5", i)
             self.otpp_patch_array(narc_file, loaded_file)
