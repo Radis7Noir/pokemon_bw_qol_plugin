@@ -12,7 +12,7 @@
 - `faster_story` changes some story events to make them more time efficient
   - Check the [changelog.md](https://github.com/Radis7Noir/pokemon_bw_qol_plugin/blob/main/changelog.md) file to see the changes
 - `blind_trainers` makes the trainers not notice the player
- -`guaranteed_catch` makes any kind of Poké Ball guaranteed to catch a wild Pokémon
+- `guaranteed_catch` makes any kind of Poké Ball guaranteed to catch a wild Pokémon
 - `remove_pickup_animation` removes the item pickup animation and makes most of the fanfare sounds skippable
 - `remove_dust_cloud_items` makes dust clouds phenomena only give encounters (flying shadows can still give items)
 - `gym_warps` adds a warp pad to every gym to skip their puzzles
