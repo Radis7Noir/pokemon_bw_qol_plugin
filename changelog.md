@@ -14,6 +14,7 @@ Changelog
 * Added an NPC in Nacrene City and another one in Nimbasa City to prevent entering Nacrene Museum and the Musical Theater before they become available in vanilla
   * This only matters if options from the Extra Logic plugin are on
 * Added more patch files to be used with the Extra Logic plugin
+* Removed the easter egg as it is now part of the Extra Logic Plugin
 
 ## v16
 * Updated the patches to be compatible with v0.3.34 of the main apworld
