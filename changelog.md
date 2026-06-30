@@ -3,6 +3,7 @@
 Changelog
 
 ## v17
+* Talking to the lass with Wingull on Route 13 is not necessary anymore to grab the Wingull Gram locations
 * `forgettable_hms` in now always on and can be removed from options in the BW YAML
 * `blind_trainers` does not use otpp patches anymore
 * Parts of `faster_story` are now applied regardless of the setting to ensure compatibility with the Extra Logic plugin
