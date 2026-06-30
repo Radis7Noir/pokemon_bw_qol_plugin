@@ -100,7 +100,7 @@ class Plugin(PluginProtocol):
                 narc_file = self.get_from_narc("a/0/0/3", i)
                 self.otpp_patch_array(narc_file, loaded_file)
 
-            for i in [14, 18, 20, 34, 36, 38, 58, 62, 126, 128, 154, 194, 216, 228, 242,
+            for i in [18, 20, 34, 38, 58, 62, 126, 128, 154, 194, 216, 228, 242,
                       634, 638, 658, 778, 780, 782, 792, 794]:
                 loaded_file = pkgutil.get_data(__name__, f"files/a057/faster_story/{i:03d}")
                 narc_file = self.get_from_narc("a/0/5/7", i)
@@ -170,7 +170,7 @@ class Plugin(PluginProtocol):
                 narc_file[0x13] = 0x01
 
 # Field Moves
-        if "hm_with_badges" in self.all_plugin_options:
+        if self.all_plugin_options.get("extra_logic", {}).get("hm_with_badges", False):
             match option_or_setting("hm_use", False):
                 case "fast":
                     suffix = "badgefast"
@@ -242,7 +242,7 @@ class Plugin(PluginProtocol):
             narc_file = self.get_from_narc("a/0/0/3", i)
             self.otpp_patch_array(narc_file, loaded_file)
 
-        for i in [12, 32, 124, 272, 292, 308, 310, 502, 504, 528, 554, 556, 642, 648, 652, 866, 706, 872]:
+        for i in [12, 14, 32, 36, 124, 272, 292, 308, 310, 502, 504, 528, 554, 556, 642, 648, 652, 866, 706, 872]:
             loaded_file = pkgutil.get_data(__name__, f"files/a057/{i:03d}")
             narc_file = self.get_from_narc("a/0/5/7", i)
             self.otpp_patch_array(narc_file, loaded_file)
