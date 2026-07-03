@@ -2,6 +2,10 @@
 
 Changelog
 
+## v18
+* Fixed Rock Smash encounters against Solosis instead of Dwebble when `hm_with_badges = true` and `hm_use = fastest`
+* Added more patch files for the next Extra Logic Plugin version
+
 ## v17
 * Talking to the lass with Wingull on Route 13 is not necessary anymore to grab the Wingull Gram locations
 * `forgettable_hms` in now always on and can be removed from options in the BW YAML
