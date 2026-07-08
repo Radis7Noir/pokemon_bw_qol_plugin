@@ -2,6 +2,9 @@
 
 Changelog
 
+## v19
+* Added more patch files to ensure compatibility with the Extra Logic Plugin
+
 ## v18
 * Fixed Rock Smash encounters against Solosis instead of Dwebble when `hm_with_badges = true` and `hm_use = fastest`
 * Added more patch files for the next Extra Logic Plugin version

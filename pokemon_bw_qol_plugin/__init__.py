@@ -22,7 +22,7 @@ class Plugin(PluginProtocol):
 
     name = "Pokemon BW QoL Plugin"
     domain = "qol"
-    version = "1.18.0"
+    version = "1.19.0"
     author = "RadisNoir"
 
     # This is called during the patching process, after the main apworld did all its standard modifications to the rom.
@@ -237,8 +237,8 @@ class Plugin(PluginProtocol):
                 self.otpp_patch_array(narc_file, loaded_file)
 
 # Extra Logic Compatibility
-        if self.all_plugin_options.get("extra_logic", {}).get("pinwheel_cut_trees", False):
-            loaded_file = pkgutil.get_data(__name__, f"files/a125/pinwheel_cut_trees/155_cut_trees")
+        if self.all_plugin_options.get("extra_logic", {}).get("extra_cut_trees", False):
+            loaded_file = pkgutil.get_data(__name__, f"files/a125/extra_cut_trees/155_cut_trees")
             narc_file = self.get_from_narc("a/1/2/5", 155)
             self.otpp_patch_array(narc_file, loaded_file)
         else:
