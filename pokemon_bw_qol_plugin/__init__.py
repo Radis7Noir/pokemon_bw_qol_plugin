@@ -22,7 +22,7 @@ class Plugin(PluginProtocol):
 
     name = "Pokemon BW QoL Plugin"
     domain = "qol"
-    version = "1.19.0"
+    version = "1.20.0"
     author = "RadisNoir"
 
     # This is called during the patching process, after the main apworld did all its standard modifications to the rom.

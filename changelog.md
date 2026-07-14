@@ -2,6 +2,10 @@
 
 Changelog
 
+## v20
+* Changed the cutscenes in Mistralton City to use fast walk animations
+* Added more patch files to ensure compatibility with the Extra Logic Plugin
+
 ## v19
 * Added more patch files to ensure compatibility with the Extra Logic Plugin
 
