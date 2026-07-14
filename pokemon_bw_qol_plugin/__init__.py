@@ -246,13 +246,13 @@ class Plugin(PluginProtocol):
             narc_file = self.get_from_narc("a/1/2/5", 155)
             self.otpp_patch_array(narc_file, loaded_file)
 
-# Always On (Repel Prompt, Shortcuts, Delete 4, Fast Text, Field Move Text)
-        for i in [21, 67, 141, 163, 263, 267, 268, 280, 300, 353, 356, 385]:
+# Always On (Repel Prompt, Shortcuts, Delete 4, Fast Text, Field Move Text, Extra Logic Scripts)
+        for i in [21, 67, 112, 141, 163, 263, 267, 268, 271, 280, 300, 353, 356, 385]:
             loaded_file = pkgutil.get_data(__name__, f"files/a003/{i:03d}")
             narc_file = self.get_from_narc("a/0/0/3", i)
             self.otpp_patch_array(narc_file, loaded_file)
 
-        for i in [12, 14, 32, 36, 124, 272, 292, 308, 310, 502, 504, 528, 554, 556, 642, 648, 652, 866, 706, 872]:
+        for i in [12, 14, 32, 36, 124, 214, 272, 292, 308, 310, 502, 504, 510, 528, 554, 556, 642, 648, 652, 866, 706, 872]:
             loaded_file = pkgutil.get_data(__name__, f"files/a057/{i:03d}")
             narc_file = self.get_from_narc("a/0/5/7", i)
             self.otpp_patch_array(narc_file, loaded_file)
