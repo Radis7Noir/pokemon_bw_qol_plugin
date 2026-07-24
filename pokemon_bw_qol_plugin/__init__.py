@@ -22,7 +22,7 @@ class Plugin(PluginProtocol):
 
     name = "Pokemon BW QoL Plugin"
     domain = "qol"
-    version = "1.20.0"
+    version = "1.21.0"
     author = "RadisNoir"
 
     # This is called during the patching process, after the main apworld did all its standard modifications to the rom.
@@ -150,9 +150,10 @@ class Plugin(PluginProtocol):
             ov_93[0x15B82:0x15B84] = b'\x00\x00'
 
 # Remove Phenomenon Items
-        if option_or_setting("remove_dust_cloud_items", False):
+        if option_or_setting("remove_dust_cloud_items", False) or option_or_setting("remove_phenomenon_items", False):
             ov_21 = self.get_overlay(21)
             ov_21[0x22adc] = 0xb5
+            ov_21[0x22abc] = 0xc5
 
 # TMs/HMs Fully Compatible
         if option_or_setting("tmhm_fully_compatible", False):
@@ -204,6 +205,18 @@ class Plugin(PluginProtocol):
                 loaded_file = pkgutil.get_data(__name__, f"files/a126/guaranteed_fishing/{i:03d}")
                 narc_file = self.get_from_narc("a/1/2/6", i)
                 self.otpp_patch_array(narc_file, loaded_file)
+            ov_21 = self.get_overlay(21)
+            ov_21[0x3dfd8:0x3dfda] = b'\x03\x2e'
+
+# Auto-run
+        if option_or_setting("auto_run", False):
+            ov_21 = self.get_overlay(21)
+            ov_21[0x1cee5] = 0xd1
+
+# Guaranteed Run against wild Pokémon
+        if option_or_setting("guaranteed_escape", False):
+            ov_93 = self.get_overlay(93)
+            ov_93[0x0757e:0x07580] = b'\x11\xe0'
 
 # Bike Everywhere / Remove Surf & Bike Music
         bike_everywhere = option_or_setting("bike_everywhere", False)
@@ -262,7 +275,7 @@ class Plugin(PluginProtocol):
             narc_file = self.get_from_narc("a/1/2/5", i)
             self.otpp_patch_array(narc_file, loaded_file)
 
-        #Text Speed Fast + Forgettable HMs
+        # Text Speed Fast + Forgettable HMs
         arm9 = self.get_arm9()
         arm9[0x04332] = 0x02
         if self._rom.name[:9] == b'POKEMON\x20W':
@@ -271,6 +284,8 @@ class Plugin(PluginProtocol):
         else:
             arm9[0x00fc4:0x00fc6] = b'\xf4\x3d'
             arm9[0x1d2e4:0x1d2e8] = b'\x00\x20\x70\x47'
+
+
 
 # Just run this python script and it will pack this plugin into an apworld file for you.
 # Note that any file or folder that contains "_temp" in its name will be ignored and the archipelago.json that's

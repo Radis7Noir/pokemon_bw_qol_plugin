@@ -2,6 +2,14 @@
 
 Changelog
 
+## v21
+* `remove_dust_cloud_items` becomes `remove_phenomenon_items` and additionally removes items from flying shadows
+* `guaranteed_fishing` now removes the timer to reel after a land
+* Added `auto_run` option
+  * Running becomes the default movement. Hold B to walk
+* Added `guaranteed_escape` option
+  * Escapes from wild Pokémon are always successful. Trapping moves and abilities will still block you
+
 ## v20
 * Changed the cutscenes in Mistralton City to use fast walk animations
 * Added more patch files to ensure compatibility with the Extra Logic Plugin
