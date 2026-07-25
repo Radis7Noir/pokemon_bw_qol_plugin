@@ -100,8 +100,14 @@ class Plugin(PluginProtocol):
                 narc_file = self.get_from_narc("a/0/0/3", i)
                 self.otpp_patch_array(narc_file, loaded_file)
 
-            for i in [18, 20, 34, 38, 58, 62, 126, 128, 154, 194, 216, 228, 242,
-                      634, 638, 658, 778, 780, 782, 792, 794]:
+            for i in [18, 20, 34, 38, 58, 62, 70, 76, 82, 88, 94, 102, 112, 120,
+                      126, 128, 132, 154, 180, 192, 194, 216, 226, 228, 240, 242,
+                      246, 264, 288, 290, 304, 316, 322, 330, 332, 334, 362, 382,
+                      384, 386, 388, 390, 394, 396, 400, 404, 410, 416, 424, 426,
+                      428, 456, 474, 508, 526, 530, 546, 634, 638, 658, 670, 674,
+                      684, 688, 690, 692, 696, 710, 712, 714, 716, 718, 720, 722,
+                      724, 726, 748, 752, 770, 774, 778, 780, 782, 792, 794, 834,
+                      836]:
                 loaded_file = pkgutil.get_data(__name__, f"files/a057/faster_story/{i:03d}")
                 narc_file = self.get_from_narc("a/0/5/7", i)
                 self.otpp_patch_array(narc_file, loaded_file)
@@ -110,6 +116,16 @@ class Plugin(PluginProtocol):
                 loaded_file = pkgutil.get_data(__name__, f"files/a125/faster_story/{i:03d}")
                 narc_file = self.get_from_narc("a/1/2/5", i)
                 self.otpp_patch_array(narc_file, loaded_file)
+
+# Liberty Garden
+        if self.all_plugin_options.get("extra_logic", {}).get("add_ss_ticket", False):
+            loaded_file = pkgutil.get_data(__name__, "files/a057/add_ss_ticket/470_ss_ticket")
+            narc_file = self.get_from_narc("a/0/5/7", 470)
+            self.otpp_patch_array(narc_file, loaded_file)
+        else:
+            loaded_file = pkgutil.get_data(__name__, "files/a057/add_ss_ticket/470_no_ss_ticket")
+            narc_file = self.get_from_narc("a/0/5/7", 470)
+            self.otpp_patch_array(narc_file, loaded_file)
 
 # Pokemon Entrance Animations
         match option_or_setting("pokemon_entrance_animations", False):
@@ -284,7 +300,6 @@ class Plugin(PluginProtocol):
         else:
             arm9[0x00fc4:0x00fc6] = b'\xf4\x3d'
             arm9[0x1d2e4:0x1d2e8] = b'\x00\x20\x70\x47'
-
 
 
 # Just run this python script and it will pack this plugin into an apworld file for you.
