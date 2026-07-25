@@ -222,7 +222,10 @@ class Plugin(PluginProtocol):
                 narc_file = self.get_from_narc("a/1/2/6", i)
                 self.otpp_patch_array(narc_file, loaded_file)
             ov_21 = self.get_overlay(21)
-            ov_21[0x3dfd8:0x3dfda] = b'\x03\x2e'
+            if self._rom.name[:9] == b'POKEMON\x20W':
+                ov_21[0x3dfd8:0x3dfda] = b'\x03\x2e'
+            else:
+                ov_21[0x3dfe0:0x3dfe2] = b'\x03\x2e'
 
 # Auto-run
         if option_or_setting("auto_run", False):
