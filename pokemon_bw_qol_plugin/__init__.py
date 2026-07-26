@@ -187,6 +187,8 @@ class Plugin(PluginProtocol):
                 narc_file[0x13] = 0x01
 
 # Field Moves
+        ov_21 = self.get_overlay(21)
+        ov_21[0x036f8:0x036fa] = b'\xc0\x46'  # Makes the water interactable without a Pokémon that knows Surf, needed for HM03 without teaching 
         if self.all_plugin_options.get("extra_logic", {}).get("hm_with_badges", False):
             match option_or_setting("hm_use", False):
                 case "fast":
@@ -304,8 +306,6 @@ class Plugin(PluginProtocol):
             arm9[0x00fc4:0x00fc6] = b'\xf4\x3d'
             arm9[0x1d2e4:0x1d2e8] = b'\x00\x20\x70\x47'
 
-        ov_21 = self.get_overlay(21)
-        ov_21[0x036f8:0x036fa] = b'\xc0\x46'
 
 # Just run this python script and it will pack this plugin into an apworld file for you.
 # Note that any file or folder that contains "_temp" in its name will be ignored and the archipelago.json that's

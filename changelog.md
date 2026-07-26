@@ -4,6 +4,7 @@ Changelog
 
 ## v21
 * Updated most story cutscenes with fast walk animations and adjusted camera pans
+* Surf can be used without teaching with `hm_use: fastest`
 * `remove_dust_cloud_items` becomes `remove_phenomenon_items` and additionally removes items from flying shadows
 * `guaranteed_fishing` now removes the timer to reel after a land
 * Added `auto_run` option

@@ -20,7 +20,7 @@ The latest version of the main APworld (0.3.34) is only compatible with v16 or l
 - `gym_warps` adds a warp pad to every gym to skip their puzzles
 - `hm_use` sets the behavior of field moves:
   - `vanilla` does not change anything
-  - `fastest` skips the confirmation window and the cut-in animation. Cut, Strength, Waterfall and Dive also become usable without teaching
+  - `fastest` skips the confirmation window and the cut-in animation. Cut, Surf, Strength, Waterfall and Dive also become usable without teaching
 - `guaranteed_fishing` makes the Super Rod always land on a Pokémon, but reeling in time is still necessary to get the encounter
 - `bike_everywhere` makes the Bicycle usable almost everywhere, including inside buildings
 - `remove_surf_bike_music` prevent the BGM to change when surfing or biking.
