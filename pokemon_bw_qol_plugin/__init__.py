@@ -22,7 +22,7 @@ class Plugin(PluginProtocol):
 
     name = "Pokemon BW QoL Plugin"
     domain = "qol"
-    version = "1.21.0"
+    version = "1.22.0"
     author = "RadisNoir"
 
     # This is called during the patching process, after the main apworld did all its standard modifications to the rom.
@@ -94,28 +94,49 @@ class Plugin(PluginProtocol):
             ov_88[addr[2]:addr[2]+len(output)] = output
 
 # Faster Story
-        if option_or_setting("faster_story", False):
-            for i in [349, 361, 428, 429, 435]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a003/faster_story/{i:03d}")
-                narc_file = self.get_from_narc("a/0/0/3", i)
-                self.otpp_patch_array(narc_file, loaded_file)
+        for i in [349, 361, 428, 429, 435]:
+            loaded_file = pkgutil.get_data(__name__, f"files/a003/faster_story/{i:03d}")
+            narc_file = self.get_from_narc("a/0/0/3", i)
+            self.otpp_patch_array(narc_file, loaded_file)
 
-            for i in [18, 20, 34, 38, 58, 62, 70, 76, 82, 88, 94, 102, 112, 120,
-                      126, 128, 132, 154, 180, 192, 194, 216, 226, 228, 240, 242,
-                      246, 264, 288, 290, 304, 316, 322, 330, 332, 334, 362, 382,
-                      384, 386, 388, 390, 394, 396, 400, 404, 410, 416, 424, 426,
-                      428, 456, 474, 508, 526, 530, 546, 634, 638, 658, 670, 674,
-                      684, 688, 690, 692, 696, 710, 712, 714, 716, 718, 720, 722,
-                      724, 726, 748, 752, 770, 774, 778, 780, 782, 792, 794, 834,
-                      836]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a057/faster_story/{i:03d}")
-                narc_file = self.get_from_narc("a/0/5/7", i)
-                self.otpp_patch_array(narc_file, loaded_file)
+        for i in [18, 20, 34, 38, 58, 62, 70, 76, 82, 88, 94, 102, 112, 120,
+                    126, 128, 132, 154, 180, 192, 194, 216, 226, 228, 240, 242,
+                    246, 264, 288, 290, 304, 316, 322, 330, 332, 334, 362, 382,
+                    384, 386, 388, 390, 394, 396, 400, 404, 410, 416, 424, 426,
+                    428, 456, 474, 508, 526, 530, 546, 634, 638, 658, 670, 674,
+                    684, 688, 690, 692, 696, 710, 712, 714, 716, 718, 720, 722,
+                    724, 726, 748, 752, 770, 774, 778, 782, 792, 794, 834, 836]:
+            loaded_file = pkgutil.get_data(__name__, f"files/a057/faster_story/{i:03d}")
+            narc_file = self.get_from_narc("a/0/5/7", i)
+            self.otpp_patch_array(narc_file, loaded_file)
 
-            for i in [28]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a125/faster_story/{i:03d}")
-                narc_file = self.get_from_narc("a/1/2/5", i)
-                self.otpp_patch_array(narc_file, loaded_file)
+        for i in [28]:
+            loaded_file = pkgutil.get_data(__name__, f"files/a125/faster_story/{i:03d}")
+            narc_file = self.get_from_narc("a/1/2/5", i)
+            self.otpp_patch_array(narc_file, loaded_file)
+
+        if self.all_plugin_options.get("extra_logic", {}).get("randomize_starting_town", False):
+
+            starting_town = self.slot_data.get("starting_town", "Nuvema Town")
+            suffix = "" if starting_town == "Nuvema Town" else "_not_nuvema"
+
+            loaded_file = pkgutil.get_data(__name__, f"files/a057/faster_story/780{suffix}")
+            narc_file = self.get_from_narc("a/0/5/7", 780)
+            self.otpp_patch_array(narc_file, loaded_file)
+
+            loaded_file = pkgutil.get_data(__name__, f"files/a125/389{suffix}")
+            narc_file = self.get_from_narc("a/1/2/5", 389)
+            self.otpp_patch_array(narc_file, loaded_file)
+
+        if not self.all_plugin_options.get("extra_logic", {}).get("randomize_starting_town", False):
+
+            loaded_file = pkgutil.get_data(__name__, f"files/a057/faster_story/780")
+            narc_file = self.get_from_narc("a/0/5/7", 780)
+            self.otpp_patch_array(narc_file, loaded_file)
+
+            loaded_file = pkgutil.get_data(__name__, f"files/a125/389")
+            narc_file = self.get_from_narc("a/1/2/5", 389)
+            self.otpp_patch_array(narc_file, loaded_file)
 
 # Liberty Garden
         if self.all_plugin_options.get("extra_logic", {}).get("add_ss_ticket", False):
@@ -291,7 +312,7 @@ class Plugin(PluginProtocol):
             narc_file = self.get_from_narc("a/0/5/7", i)
             self.otpp_patch_array(narc_file, loaded_file)
 
-        for i in [16, 62, 154, 251, 252, 264, 277, 321]:
+        for i in [16, 62, 154, 251, 252, 264, 277, 317, 321, 397]:
             loaded_file = pkgutil.get_data(__name__, f"files/a125/{i:03d}")
             narc_file = self.get_from_narc("a/1/2/5", i)
             self.otpp_patch_array(narc_file, loaded_file)
