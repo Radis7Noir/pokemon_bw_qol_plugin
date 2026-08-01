@@ -2,6 +2,10 @@
 
 Changelog
 
+## v22
+* Removed the Mom call on Route 7
+* Added/Adjusted more patch files to ensure compatibility with the Extra Logic Plugin
+
 ## v21
 * Updated most story cutscenes with fast walk animations and adjusted camera pans
 * Surf can be used without teaching with `hm_use: fastest`
