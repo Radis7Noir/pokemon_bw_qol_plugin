@@ -253,7 +253,8 @@ class Plugin(PluginProtocol):
 # Auto-run
         if option_or_setting("auto_run", False):
             ov_21 = self.get_overlay(21)
-            ov_21[0x1cee5] = 0xd1
+            ov_21[0x1cee5] = 0xd1  # grid
+            ov_21[0x1dff1] = 0xd1  # rail
 
 # Guaranteed Run against wild Pokémon
         if option_or_setting("guaranteed_escape", False):
