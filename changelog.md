@@ -2,6 +2,11 @@
 
 Changelog
 
+## v23
+* Fixed auto-run not working in some places
+* Adjusted the field move patch files for smoother HM interactions
+* Imported the updated patch from the Extra Logic plugin for the Landorus fix
+
 ## v22
 * Removed the Mom call on Route 7
 * Added/Adjusted more patch files to ensure compatibility with the Extra Logic Plugin
