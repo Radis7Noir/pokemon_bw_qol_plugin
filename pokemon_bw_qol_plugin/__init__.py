@@ -239,11 +239,11 @@ class Plugin(PluginProtocol):
 
 # Guaranteed Fishing
         if option_or_setting("guaranteed_fishing", False):
-            for i in [0, 1, 2, 6, 49, 53, 58, 69, 71, 72, 73, 75, 77, 79, 80, 81, 82, 84, 93, 94, 98,
-                      101, 103, 104, 105, 108, 109, 110, 111]:
-                loaded_file = pkgutil.get_data(__name__, f"files/a126/guaranteed_fishing/{i:03d}")
+            for i in range(112):
                 narc_file = self.get_from_narc("a/1/2/6", i)
-                self.otpp_patch_array(narc_file, loaded_file)
+                if narc_file[0x05] != 0:  # 0x32 = 50%, 0x50 = 80%, 0xFF = always
+                    narc_file[0x05:0x07] = b'\xff\xff'
+
             ov_21 = self.get_overlay(21)
             if self._rom.name[:9] == b'POKEMON\x20W':
                 ov_21[0x3dfd8:0x3dfda] = b'\x03\x2e'
@@ -264,14 +264,16 @@ class Plugin(PluginProtocol):
 # Bike Everywhere / Remove Surf & Bike Music
         bike_everywhere = option_or_setting("bike_everywhere", False)
         remove_surf_bike_music = option_or_setting("remove_surf_bike_music", False)
-        if bike_everywhere:
-            loaded_file = pkgutil.get_data(__name__, "files/a012/a012_000_bike")
-            narc_file = self.get_from_narc("a/0/1/2", 0)
-            self.otpp_patch_array(narc_file, loaded_file)
-        if remove_surf_bike_music:
-            loaded_file = pkgutil.get_data(__name__, "files/a012/a012_000_music")
-            narc_file = self.get_from_narc("a/0/1/2", 0)
-            self.otpp_patch_array(narc_file, loaded_file)
+        if bike_everywhere or remove_surf_bike_music:
+                    map_headers = self.get_from_narc("a/0/1/2", 0)
+                    MAP_HEADER_SIZE = 48
+                    FLAGS_OFFSET = 31  # 0x04 = bike allowed, 0x40 = surf/bike music
+                    for map_id in range(len(map_headers) // MAP_HEADER_SIZE):
+                        flags = map_id * MAP_HEADER_SIZE + FLAGS_OFFSET
+                        if bike_everywhere:
+                            map_headers[flags] |= 0x04
+                        if remove_surf_bike_music:
+                            map_headers[flags] &= ~0x40
 
 # Gym Warps
         if option_or_setting("gym_warps", False):
